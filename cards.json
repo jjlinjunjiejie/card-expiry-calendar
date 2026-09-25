@@ -4,9 +4,9 @@
   {"region":"日本","name":"ViewCard","year":2030,"month":10},
   {"region":"日本","name":"JCB信用卡","year":2029,"month":5},
 
-  {"region":"香港","name":"卓越提款卡","year":2035,"month":9},
-  {"region":"香港","name":"中银香港提款卡","year":2032,"month":7},
-  {"region":"香港","name":"汇丰万事达卡","year":2035,"month":7},
+  {"region":"香港","name":"HSBC 卓越提款卡","year":2035,"month":9},
+  {"region":"香港","name":"中银香港 提款卡","year":2032,"month":7},
+  {"region":"香港","name":"HSBC 万事达卡","year":2035,"month":7},
   {"region":"香港","name":"中银香港万事达卡","year":2032,"month":10},
   {"region":"香港","name":"HSBC Visa Signature 信用卡","year":2031,"month":9},
   {"region":"香港","name":"HSBC Pulse信用卡","year":2033,"month":7},
