@@ -18,7 +18,7 @@
   <h1>银行卡到期提醒</h1>
   <p>共 23 张卡。每张卡会在到期月份前两个月的 1 日显示为全天事项。</p>
   <a class="button" id="subscribe" href="calendar.ics">订阅到 Apple 日历</a>
-  <p class="muted">标题只显示卡名，备注中保存卡名及到期时间。订阅后，源日历有更新时 Apple 日历会自动同步。</p>
+  <p class="muted">标题只显示卡名，备注中保存卡名及到期时间。有效期结束满一个月且信息仍未更新时，该卡会自动从订阅日历移除；GitHub 清单仍会保留并添加删除线。</p>
   <p>订阅地址：<br><code id="url"></code></p>
   <script>
     const httpsUrl = new URL('calendar.ics', location.href).href;

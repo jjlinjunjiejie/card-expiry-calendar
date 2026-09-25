@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Generate a standards-compliant subscribable iCalendar file."""
+"""Generate the subscribable calendar and the GitHub card-status list."""
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from datetime import date, timedelta
@@ -10,6 +11,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
+STATUS_START = "<!-- CARD_STATUS_START -->"
+STATUS_END = "<!-- CARD_STATUS_END -->"
 
 
 def escape(value: str) -> str:
@@ -38,7 +41,21 @@ def reminder_date(year: int, month: int) -> date:
     return date(absolute_month // 12, absolute_month % 12 + 1, 1)
 
 
-def build_event(card: dict[str, object]) -> list[str]:
+def add_months(year: int, month: int, offset: int) -> date:
+    absolute_month = year * 12 + (month - 1) + offset
+    return date(absolute_month // 12, absolute_month % 12 + 1, 1)
+
+
+def archive_date(card: dict[str, object]) -> date:
+    """Archive one full month after the card's expiry month has ended."""
+    return add_months(int(card["year"]), int(card["month"]), 2)
+
+
+def is_archived(card: dict[str, object], today: date) -> bool:
+    return today >= archive_date(card)
+
+
+def build_event(card: dict[str, object], stamp: str) -> list[str]:
     name = str(card["name"])
     region = str(card["region"])
     expiry = str(card["expiry"])
@@ -49,7 +66,7 @@ def build_event(card: dict[str, object]) -> list[str]:
     return [
         "BEGIN:VEVENT",
         f"UID:{uid_hash}@card-expiry-calendar",
-        "DTSTAMP:20260925T000000Z",
+        f"DTSTAMP:{stamp}",
         f"DTSTART;VALUE=DATE:{start:%Y%m%d}",
         f"DTEND;VALUE=DATE:{end:%Y%m%d}",
         f"SUMMARY:{escape(name)}",
@@ -66,8 +83,50 @@ def build_event(card: dict[str, object]) -> list[str]:
     ]
 
 
+def build_status(cards: list[dict[str, object]], today: date) -> str:
+    lines = [
+        STATUS_START,
+        f"_自动状态日期：{today:%Y-%m-%d}_",
+        "",
+        "| 地区 | 银行卡 | 到期时间 | 状态 |",
+        "| --- | --- | --- | --- |",
+    ]
+    for card in cards:
+        name = str(card["name"])
+        expiry = str(card["expiry"])
+        region = str(card["region"])
+        if is_archived(card, today):
+            archived_on = archive_date(card)
+            lines.append(
+                f"| {region} | ~~{name}~~ | ~~{expiry}~~ | ~~已归档（{archived_on:%Y-%m-%d}）~~ |"
+            )
+        else:
+            lines.append(f"| {region} | {name} | {expiry} | 有效 |")
+    lines.append(STATUS_END)
+    return "\n".join(lines)
+
+
+def update_readme(cards: list[dict[str, object]], today: date) -> None:
+    path = ROOT / "README.md"
+    content = path.read_text(encoding="utf-8")
+    before, marker, remainder = content.partition(STATUS_START)
+    if not marker:
+        raise RuntimeError("README.md is missing the card-status markers")
+    _, marker, after = remainder.partition(STATUS_END)
+    if not marker:
+        raise RuntimeError("README.md is missing the closing card-status marker")
+    status = build_status(cards, today)
+    path.write_text(before + status + after, encoding="utf-8")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--today", type=date.fromisoformat, default=date.today())
+    args = parser.parse_args()
+    today: date = args.today
     cards = json.loads((ROOT / "cards.json").read_text(encoding="utf-8"))
+    active_cards = [card for card in cards if not is_archived(card, today)]
+    stamp = f"{today:%Y%m%d}T000000Z"
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
@@ -79,13 +138,14 @@ def main() -> None:
         "X-PUBLISHED-TTL:PT12H",
         "REFRESH-INTERVAL;VALUE=DURATION:PT12H",
     ]
-    for card in cards:
-        lines.extend(build_event(card))
+    for card in active_cards:
+        lines.extend(build_event(card, stamp))
     lines.append("END:VCALENDAR")
 
     folded = [part for line in lines for part in fold(line)]
     (ROOT / "calendar.ics").write_bytes(("\r\n".join(folded) + "\r\n").encode("utf-8"))
-    print(f"Generated calendar.ics with {len(cards)} events")
+    update_readme(cards, today)
+    print(f"Generated calendar.ics with {len(active_cards)} active events; {len(cards) - len(active_cards)} archived")
 
 
 if __name__ == "__main__":
