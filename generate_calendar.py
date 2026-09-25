@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import json
 from datetime import date, timedelta
 from pathlib import Path
@@ -89,25 +90,40 @@ def build_event(card: dict[str, object], stamp: str) -> list[str]:
 
 
 def build_status(cards: list[dict[str, object]], today: date) -> str:
+    grouped_cards: dict[str, list[dict[str, object]]] = {}
+    for card in cards:
+        grouped_cards.setdefault(str(card["category"]), []).append(card)
+
     lines = [
         STATUS_START,
         f"_自动状态日期：{today:%Y-%m-%d}_",
         "",
-        "| 类别 | 银行卡 | 到期时间 | 状态 |",
-        "| --- | --- | --- | --- |",
+        "<table>",
+        "  <thead>",
+        "    <tr><th>类别</th><th>银行卡</th><th>到期时间</th><th>状态</th></tr>",
+        "  </thead>",
+        "  <tbody>",
     ]
-    for card in cards:
-        name = str(card["name"])
-        expiry = expiry_display(card)
-        category = str(card["category"])
-        if is_archived(card, today):
-            archived_on = archive_date(card)
+    for category, category_cards in grouped_cards.items():
+        for index, card in enumerate(category_cards):
+            name = html.escape(str(card["name"]))
+            expiry = html.escape(expiry_display(card))
+            if is_archived(card, today):
+                archived_on = archive_date(card)
+                name = f"<s>{name}</s>"
+                expiry = f"<s>{expiry}</s>"
+                status = f"<s>已归档（{archived_on:%Y-%m-%d}）</s>"
+            else:
+                status = "有效"
+            category_cell = ""
+            if index == 0:
+                category_cell = (
+                    f'<td rowspan="{len(category_cards)}">{html.escape(category)}</td>'
+                )
             lines.append(
-                f"| {category} | ~~{name}~~ | ~~{expiry}~~ | ~~已归档（{archived_on:%Y-%m-%d}）~~ |"
+                f"    <tr>{category_cell}<td>{name}</td><td>{expiry}</td><td>{status}</td></tr>"
             )
-        else:
-            lines.append(f"| {category} | {name} | {expiry} | 有效 |")
-    lines.append(STATUS_END)
+    lines.extend(["  </tbody>", "</table>", STATUS_END])
     return "\n".join(lines)
 
 
