@@ -62,7 +62,7 @@ def expiry_display(card: dict[str, object]) -> str:
 
 def build_event(card: dict[str, object], stamp: str) -> list[str]:
     name = str(card["name"])
-    region = str(card["region"])
+    category = str(card["category"])
     expiry = expiry_display(card)
     start = reminder_date(int(card["year"]), int(card["month"]))
     end = start + timedelta(days=1)
@@ -76,7 +76,7 @@ def build_event(card: dict[str, object], stamp: str) -> list[str]:
         f"DTEND;VALUE=DATE:{end:%Y%m%d}",
         f"SUMMARY:{escape(name)}",
         f"DESCRIPTION:{escape(description)}",
-        f"CATEGORIES:{escape(region)},银行卡到期提醒",
+        f"CATEGORIES:{escape(category)},银行卡到期提醒",
         "TRANSP:TRANSPARENT",
         "STATUS:CONFIRMED",
         "BEGIN:VALARM",
@@ -93,20 +93,20 @@ def build_status(cards: list[dict[str, object]], today: date) -> str:
         STATUS_START,
         f"_自动状态日期：{today:%Y-%m-%d}_",
         "",
-        "| 地区 | 银行卡 | 到期时间 | 状态 |",
+        "| 类别 | 银行卡 | 到期时间 | 状态 |",
         "| --- | --- | --- | --- |",
     ]
     for card in cards:
         name = str(card["name"])
         expiry = expiry_display(card)
-        region = str(card["region"])
+        category = str(card["category"])
         if is_archived(card, today):
             archived_on = archive_date(card)
             lines.append(
-                f"| {region} | ~~{name}~~ | ~~{expiry}~~ | ~~已归档（{archived_on:%Y-%m-%d}）~~ |"
+                f"| {category} | ~~{name}~~ | ~~{expiry}~~ | ~~已归档（{archived_on:%Y-%m-%d}）~~ |"
             )
         else:
-            lines.append(f"| {region} | {name} | {expiry} | 有效 |")
+            lines.append(f"| {category} | {name} | {expiry} | 有效 |")
     lines.append(STATUS_END)
     return "\n".join(lines)
 
@@ -129,7 +129,12 @@ def main() -> None:
     parser.add_argument("--today", type=date.fromisoformat, default=date.today())
     args = parser.parse_args()
     today: date = args.today
-    cards = json.loads((ROOT / "cards.json").read_text(encoding="utf-8"))
+    card_groups = json.loads((ROOT / "cards.json").read_text(encoding="utf-8"))
+    cards = [
+        {**card, "category": category}
+        for category, category_cards in card_groups.items()
+        for card in category_cards
+    ]
     active_cards = [card for card in cards if not is_archived(card, today)]
     stamp = f"{today:%Y%m%d}T000000Z"
     lines = [

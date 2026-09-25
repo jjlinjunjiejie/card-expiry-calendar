@@ -1,28 +1,31 @@
-[
-  {"region":"日本","name":"乐天信用卡","year":2028,"month":9},
-  {"region":"日本","name":"MUFG 信用卡","year":2027,"month":12},
-  {"region":"日本","name":"ViewCard","year":2030,"month":10},
-  {"region":"日本","name":"JCB信用卡","year":2029,"month":5},
-
-  {"region":"香港","name":"HSBC 卓越提款卡","year":2035,"month":9},
-  {"region":"香港","name":"中银香港 提款卡","year":2032,"month":7},
-  {"region":"香港","name":"HSBC 万事达卡","year":2035,"month":7},
-  {"region":"香港","name":"中银香港万事达卡","year":2032,"month":10},
-  {"region":"香港","name":"HSBC Visa Signature 信用卡","year":2031,"month":9},
-  {"region":"香港","name":"HSBC Pulse信用卡","year":2033,"month":7},
-  {"region":"香港","name":"中国银行 招财猫","year":2030,"month":12},
-
-  {"region":"中国","name":"建行 Muse 信用卡","year":2030,"month":7},
-  {"region":"中国","name":"建行全球付信用卡","year":2029,"month":2},
-  {"region":"中国","name":"建行哔哩哔哩信用卡","year":2030,"month":1},
-  {"region":"中国","name":"兴业银行储蓄卡","year":2032,"month":3},
-  {"region":"中国","name":"招商银行储蓄卡","year":2034,"month":3},
-  {"region":"中国","name":"上海银行储蓄卡","year":2029,"month":7},
-  {"region":"中国","name":"光大银行储蓄卡","year":2031,"month":12},
-  {"region":"中国","name":"中信银行储蓄卡","year":2034,"month":1},
-  {"region":"中国","name":"广发银行储蓄卡","year":2031,"month":11},
-  {"region":"中国","name":"建设银行储蓄卡","year":2035,"month":1},
-
-  {"region":"其他","name":"Schwab 提款卡","year":2027,"month":2},
-  {"region":"其他","name":"Wise提款卡","year":2028,"month":11}
-]
+{
+  "信用卡": [
+    {"name":"MUFG 信用卡","year":2027,"month":12},
+    {"name":"乐天信用卡","year":2028,"month":9},
+    {"name":"建行全球付信用卡","year":2029,"month":2},
+    {"name":"JCB信用卡","year":2029,"month":5},
+    {"name":"建行哔哩哔哩信用卡","year":2030,"month":1},
+    {"name":"建行 Muse 信用卡","year":2030,"month":7},
+    {"name":"ViewCard","year":2030,"month":10},
+    {"name":"HSBC Visa Signature 信用卡","year":2031,"month":9},
+    {"name":"中银香港万事达卡","year":2032,"month":10},
+    {"name":"HSBC Pulse信用卡","year":2033,"month":7},
+    {"name":"HSBC 万事达卡","year":2035,"month":7}
+  ],
+  "提款卡": [
+    {"name":"Schwab 提款卡","year":2027,"month":2},
+    {"name":"Wise提款卡","year":2028,"month":11},
+    {"name":"中银香港 提款卡","year":2032,"month":7},
+    {"name":"HSBC 卓越提款卡","year":2035,"month":9}
+  ],
+  "储蓄卡": [
+    {"name":"上海银行储蓄卡","year":2029,"month":7},
+    {"name":"中国银行 招财猫","year":2030,"month":12},
+    {"name":"广发银行储蓄卡","year":2031,"month":11},
+    {"name":"光大银行储蓄卡","year":2031,"month":12},
+    {"name":"兴业银行储蓄卡","year":2032,"month":3},
+    {"name":"中信银行储蓄卡","year":2034,"month":1},
+    {"name":"招商银行储蓄卡","year":2034,"month":3},
+    {"name":"建设银行储蓄卡","year":2035,"month":1}
+  ]
+}
