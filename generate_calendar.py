@@ -55,10 +55,15 @@ def is_archived(card: dict[str, object], today: date) -> bool:
     return today >= archive_date(card)
 
 
+def expiry_display(card: dict[str, object]) -> str:
+    """Always render expiry years with four digits."""
+    return f"{int(card['year']):04d} 年 {int(card['month'])} 月"
+
+
 def build_event(card: dict[str, object], stamp: str) -> list[str]:
     name = str(card["name"])
     region = str(card["region"])
-    expiry = str(card["expiry"])
+    expiry = expiry_display(card)
     start = reminder_date(int(card["year"]), int(card["month"]))
     end = start + timedelta(days=1)
     uid_hash = hashlib.sha256(f"{name}|{card['year']}|{card['month']}".encode()).hexdigest()[:20]
@@ -93,7 +98,7 @@ def build_status(cards: list[dict[str, object]], today: date) -> str:
     ]
     for card in cards:
         name = str(card["name"])
-        expiry = str(card["expiry"])
+        expiry = expiry_display(card)
         region = str(card["region"])
         if is_archived(card, today):
             archived_on = archive_date(card)
