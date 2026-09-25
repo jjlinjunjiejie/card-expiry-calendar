@@ -7,6 +7,7 @@
     {"name":"建行哔哩哔哩信用卡","year":2030,"month":1},
     {"name":"建行 Muse 信用卡","year":2030,"month":7},
     {"name":"ViewCard","year":2030,"month":10},
+    {"name":"中国银行招财猫 信用卡","year":2030,"month":12},
     {"name":"HSBC Visa Signature 信用卡","year":2031,"month":9},
     {"name":"中银香港万事达卡","year":2032,"month":10},
     {"name":"HSBC Pulse信用卡","year":2033,"month":7},
@@ -20,7 +21,6 @@
   ],
   "储蓄卡": [
     {"name":"上海银行储蓄卡","year":2029,"month":7},
-    {"name":"中国银行 招财猫","year":2030,"month":12},
     {"name":"广发银行储蓄卡","year":2031,"month":11},
     {"name":"光大银行储蓄卡","year":2031,"month":12},
     {"name":"兴业银行储蓄卡","year":2032,"month":3},
