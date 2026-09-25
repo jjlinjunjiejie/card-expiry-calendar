@@ -39,7 +39,7 @@ def fold(line: str) -> list[str]:
 
 def reminder_date(year: int, month: int) -> date:
     absolute_month = year * 12 + (month - 1) - 2
-    return date(absolute_month // 12, absolute_month % 12 + 1, 1)
+    return date(absolute_month // 12, absolute_month % 12 + 1, 3)
 
 
 def add_months(year: int, month: int, offset: int) -> date:
