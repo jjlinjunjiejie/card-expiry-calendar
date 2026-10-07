@@ -23,19 +23,19 @@ _自动状态日期：2026-10-07_
   <tbody>
     <tr><td rowspan="13">信用卡</td><td>MUFG 信用卡</td><td>2027 年 12 月</td><td>有效</td></tr>
     <tr><td>乐天信用卡</td><td>2028 年 9 月</td><td>有效</td></tr>
-    <tr><td>建行全球付信用卡</td><td>2029 年 2 月</td><td>有效</td></tr>
+    <tr><td>建行 全球付信用卡</td><td>2029 年 2 月</td><td>有效</td></tr>
     <tr><td>JCB信用卡</td><td>2029 年 5 月</td><td>有效</td></tr>
-    <tr><td>建行哔哩哔哩信用卡</td><td>2030 年 1 月</td><td>有效</td></tr>
+    <tr><td>建行 哔哩哔哩信用卡</td><td>2030 年 1 月</td><td>有效</td></tr>
     <tr><td>建行 Muse 信用卡</td><td>2030 年 7 月</td><td>有效</td></tr>
     <tr><td>ViewCard</td><td>2030 年 10 月</td><td>有效</td></tr>
-    <tr><td>中国银行招财猫 信用卡</td><td>2030 年 12 月</td><td>有效</td></tr>
+    <tr><td>中国银行 招财猫 信用卡</td><td>2030 年 12 月</td><td>有效</td></tr>
     <tr><td>HSBC Visa Signature 信用卡</td><td>2031 年 9 月</td><td>有效</td></tr>
-    <tr><td>中银香港万事达卡</td><td>2032 年 10 月</td><td>有效</td></tr>
-    <tr><td>HSBC Pulse信用卡</td><td>2033 年 7 月</td><td>有效</td></tr>
-    <tr><td>HSBC Red信用卡</td><td>2033 年 10 月</td><td>有效</td></tr>
+    <tr><td>中银香港 万事达卡</td><td>2032 年 10 月</td><td>有效</td></tr>
+    <tr><td>HSBC Pulse 信用卡</td><td>2033 年 7 月</td><td>有效</td></tr>
+    <tr><td>HSBC Red 信用卡</td><td>2033 年 10 月</td><td>有效</td></tr>
     <tr><td>HSBC 万事达卡</td><td>2035 年 7 月</td><td>有效</td></tr>
     <tr><td rowspan="4">提款卡</td><td>Schwab 提款卡</td><td>2027 年 2 月</td><td>有效</td></tr>
-    <tr><td>Wise提款卡</td><td>2028 年 11 月</td><td>有效</td></tr>
+    <tr><td>Wise 提款卡</td><td>2028 年 11 月</td><td>有效</td></tr>
     <tr><td>中银香港 提款卡</td><td>2032 年 7 月</td><td>有效</td></tr>
     <tr><td>HSBC 卓越提款卡</td><td>2035 年 9 月</td><td>有效</td></tr>
     <tr><td rowspan="7">储蓄卡</td><td>上海银行储蓄卡</td><td>2029 年 7 月</td><td>有效</td></tr>
